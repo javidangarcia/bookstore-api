@@ -30,3 +30,34 @@ func CreateBook(book Book) error {
 
 	return nil
 }
+
+func GetBookByISBN(isbn string) (Book, error) {
+	book := &Book{}
+
+	row := pool.QueryRow(context.Background(), `
+		SELECT isbn, name, description, price, author, genre, publisher, year_published, copies_sold 
+		FROM books 
+		WHERE isbn = $1`, isbn)
+
+	err := row.Scan(&book.ISBN, &book.Name, &book.Description, &book.Price, &book.Author, &book.Genre, &book.Publisher, &book.YearPublished, &book.CopiesSold)
+
+	if err != nil {
+		return Book{}, err
+	}
+
+	return *book, nil
+}
+
+func BookExists(isbn string) (bool, error) {
+	var count int
+
+	row := pool.QueryRow(context.Background(), `SELECT COUNT(*) FROM books WHERE isbn = $1`, isbn)
+
+	err := row.Scan(&count)
+
+	if err != nil {
+		return false, err
+	}
+
+	return count == 1, nil
+}
