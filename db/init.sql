@@ -10,3 +10,11 @@ CREATE TABLE IF NOT EXISTS books (
     year_published INT,
     copies_sold INT
 );
+
+CREATE TABLE IF NOT EXISTS authors (
+    id SERIAL PRIMARY KEY,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    biography TEXT NOT NULL,
+    publisher VARCHAR(255) NOT NULL
+);

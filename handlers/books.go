@@ -8,7 +8,7 @@ import (
 	"github.com/javidangarcia/bookstore-api/data"
 )
 
-func CreateBook(w http.ResponseWriter, r *http.Request) {
+func handleCreateBook(w http.ResponseWriter, r *http.Request) {
 	book := data.Book{}
 
 	decodeErr := json.NewDecoder(r.Body).Decode(&book)
@@ -41,9 +41,9 @@ func CreateBook(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Book successfully created."))
 }
 
-func GetBookByISBN(w http.ResponseWriter, r *http.Request) {
+func handleGetBookByISBN(w http.ResponseWriter, r *http.Request) {
 	isbn := chi.URLParam(r, "isbn")
-	book, err := data.GetBookByISBN(isbn)
+	book, err := data.FetchBookByISBN(isbn)
 
 	if err != nil {
 		respondWithError(w, "The book with the provided ISBN was not found.", http.StatusNotFound)

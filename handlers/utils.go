@@ -22,3 +22,7 @@ func bookHasMissingFields(book data.Book) bool {
 	book.Author == "" || book.Genre == "" || book.Publisher == "" || book.YearPublished == 0 || 
 	book.CopiesSold == 0
 }
+
+func authorHasMissingFields(author data.Author) bool {
+	return author.FirstName == "" || author.LastName == "" || author.Biography == "" || author.Publisher == ""
+}

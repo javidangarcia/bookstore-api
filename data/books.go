@@ -31,7 +31,7 @@ func CreateBook(book Book) error {
 	return nil
 }
 
-func GetBookByISBN(isbn string) (Book, error) {
+func FetchBookByISBN(isbn string) (Book, error) {
 	book := &Book{}
 
 	row := pool.QueryRow(context.Background(), `

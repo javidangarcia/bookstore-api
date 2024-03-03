@@ -10,8 +10,9 @@ func Routes() *chi.Mux {
 
 	r.Use(middleware.Logger)
 
-	r.Post("/books", CreateBook)
-	r.Get("/books/{isbn}", GetBookByISBN)
+	r.Post("/books", handleCreateBook)
+	r.Get("/books/{isbn}", handleGetBookByISBN)
+	r.Post("/authors", handleCreateAuthor)
 
 	return r
 }
