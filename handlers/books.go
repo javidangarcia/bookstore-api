@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 
 	"github.com/go-chi/chi"
 	"github.com/javidangarcia/bookstore-api/data"
@@ -59,4 +60,32 @@ func handleGetBookByISBN(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(bookJSON)
+}
+
+func handleGetBooksByAuthorID(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "authorID")
+
+	authorID, err := strconv.Atoi(id)
+
+	if err != nil {
+		respondWithError(w, "Oops! Something went wrong on our end. Please try again later.", http.StatusInternalServerError)
+		return
+	}
+
+	books, err := data.FetchBooksByAuthorID(authorID)
+
+	if err != nil {
+		respondWithError(w, "Oops! Something went wrong on our end. Please try again later.", http.StatusInternalServerError)
+		return
+	}
+
+	booksJSON, err := json.Marshal(books)
+
+	if err != nil {
+		respondWithError(w, "Oops! Something went wrong on our end. Please try again later.", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(booksJSON)
 }

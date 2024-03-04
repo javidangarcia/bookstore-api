@@ -13,6 +13,7 @@ func Routes() *chi.Mux {
 	r.Post("/books", handleCreateBook)
 	r.Get("/books/{isbn}", handleGetBookByISBN)
 	r.Post("/authors", handleCreateAuthor)
+	r.Get("/authors/{authorID}/books", handleGetBooksByAuthorID)
 
 	return r
 }

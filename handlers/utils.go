@@ -19,7 +19,7 @@ func respondWithError(w http.ResponseWriter, msg string, status int) {
 
 func bookHasMissingFields(book data.Book) bool {
 	return book.ISBN == "" || book.Name == "" || book.Description == "" || book.Price == 0 || 
-	book.Author == "" || book.Genre == "" || book.Publisher == "" || book.YearPublished == 0 || 
+	book.AuthorID == 0 || book.Genre == "" || book.Publisher == "" || book.YearPublished == 0 || 
 	book.CopiesSold == 0
 }
 
